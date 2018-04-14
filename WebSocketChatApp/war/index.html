@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="ISO-8859-1" content="text/html">
+		<title>Chat Client</title>
+		<script type="text/javascript">
+			var webSocket = new WebSocket("ws://localhost:8080/WebSocketChatApp/chatServerEndPoint");
+		
+			webSocket.onMessage = function processMessage(message){
+				var jsonMessage = JSON.parse(message.data);
+				if(jsonMessage.message != null){
+					messgaeArea.value = messgaeArea.value + jsonMessage.message + "\n"
+				}
+			}
+		
+			function send(){
+				webSocket.send(messageInput.value);
+			}
+		</script>
+	</head>
+	<body>
+		<textarea id = "messgaeArea" readOnly = "readonly" rows="15" cols = "50"></textarea>
+		<br/>
+		<input type = "text" id = "messageInput" size = "60" /><input type = "button" value = "Send" onClick = "send()"/>
+	</body>
+</html>
